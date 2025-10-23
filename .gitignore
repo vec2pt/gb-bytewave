@@ -1,3 +1,7 @@
+build/
+obj/
+src/assets
+
 # Prerequisites
 *.d
 
