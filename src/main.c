@@ -19,7 +19,7 @@
 // Variables / Constants
 // -----------------------------------------------------------------------------
 
-#define VERSION "v0.8.0"
+#define VERSION "v0.8.1"
 
 // Sound
 uint16_t sound_interrupt_counter, t_bytebeat;
