@@ -2,6 +2,9 @@
 
 // https://gbdev.io/pandocs/Audio_Registers.html#ff1d--nr33-channel-3-period-low-write-only
 // Source: https://www.liutaiomottola.com/formulae/freqtab.htm
+
+#define FREQUENCIES_COUNT 72
+
 const uint16_t frequencies[] = {
     44,   157,  263,  363,  457,  547,  631,  711,  786,  856,  923,  986,
     1046, 1102, 1155, 1205, 1253, 1297, 1339, 1379, 1417, 1452, 1486, 1517,

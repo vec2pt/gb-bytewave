@@ -336,13 +336,13 @@ void s_settings_inputs(void) {
     case 0:
       // Pitch
       if (key_ticked(J_RIGHT)) {
-        if (frequency_index < 71)
+        if (frequency_index < FREQUENCIES_COUNT - 1)
           frequency_index++;
       } else if (key_ticked(J_LEFT)) {
         if (frequency_index > 0)
           frequency_index--;
       } else if (key_ticked(J_UP)) {
-        if (frequency_index < 71 - 12)
+        if (frequency_index < FREQUENCIES_COUNT - 12)
           frequency_index += 12;
       } else if (key_ticked(J_DOWN)) {
         if (frequency_index > 11)
