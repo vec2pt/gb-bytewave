@@ -29,17 +29,7 @@ Bytebeat formulas used in the code taken from [`bytebeat_formulas.txt`](http://v
 ## Build from source (Linux)
 
 1. Clone the repository.
-
-```bash
-git clone https://github.com/vec2pt/gb-bytewave.git
-cd gb-bytewave
-```
-
-2. Build the ROM from source.
-
-```bash
-make
-```
+2. Build the ROM from source code using the `make` command.
 
 ## Screenshots
 
