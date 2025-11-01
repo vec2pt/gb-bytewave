@@ -13,13 +13,14 @@
 
 // Include assets
 #include "assets/logo.h"
-#include "assets/tiles.h"
 
 // -----------------------------------------------------------------------------
 // Variables / Constants
 // -----------------------------------------------------------------------------
 
-#define VERSION "v0.8.1"
+#define VERSION "v0.8.2"
+
+#define TILE_COUNT 98
 
 // Sound
 uint16_t sound_interrupt_counter, t_bytebeat;
@@ -30,7 +31,7 @@ bool play = false;
 
 // ByteBeat Functions
 #define FUNCTIONS_COUNT 16
-uint8_t function_nr = 0;
+uint8_t function_nr = 0, function_previous_nr = 1;
 
 // Source: http://viznut.fi/demos/unix/bytebeat_formulas.txt
 const char bb_n[FUNCTIONS_COUNT][17] = {"Alien dungeon",
@@ -185,8 +186,7 @@ uint8_t screen = 0, previous_screen = 3;
 // -----------------------------------------------------------------------------
 
 void s_func_update(void) {
-  for (uint8_t i = 0; i != FUNCTIONS_COUNT; i++)
-    set_bkg_tile_xy(1, i + 1, 0);
+  set_bkg_tile_xy(1, function_previous_nr + 1, 0);
   set_bkg_tile_xy(1, function_nr + 1, 0x1E);
 }
 
@@ -206,6 +206,7 @@ void s_func_draw(void) {
 }
 
 void s_func_inputs(void) {
+  function_previous_nr = function_nr;
   if (key_ticked(J_DOWN)) {
     if (function_nr < FUNCTIONS_COUNT - 1)
       function_nr++;
@@ -253,14 +254,14 @@ void s_visualization_draw(void) {
     for (uint8_t i = 0; i != 32; i++) {
       uint8_t _tile[8] = {_waveram[i], _waveram[i], _waveram[i], _waveram[i],
                           _waveram[i], _waveram[i], _waveram[i], _waveram[i]};
-      set_bkg_1bpp_data(tiles_TILE_COUNT + logo_TILE_COUNT + 1 + i, 1, _tile);
+      set_bkg_1bpp_data(TILE_COUNT + logo_TILE_COUNT + 1 + i, 1, _tile);
     }
   } else {
     // Random tiles if _waveram empty.
     for (uint8_t i = 0; i != 32; i++) {
       uint8_t r = rand();
       uint8_t _tile[8] = {r, r, r, r, r, r, r, r};
-      set_bkg_1bpp_data(tiles_TILE_COUNT + logo_TILE_COUNT + 1 + i, 1, _tile);
+      set_bkg_1bpp_data(TILE_COUNT + logo_TILE_COUNT + 1 + i, 1, _tile);
     }
   }
 
@@ -448,37 +449,39 @@ void check_inputs(void) {
   }
 }
 
-// TODO: Is there a better way to load a font?
-// https://gbdev.gg8.se/forums/viewtopic.php?id=275
-void setup_font(void) {
-  font_init();
-  font_load(font_ibm);
-
-  // Overriding font tiles
-  set_bkg_data(1, tiles_TILE_COUNT, tiles_tiles);
-}
-
 void show_logo(void) {
   gotoxy(6, 4);
-  printf("BYTEWAVE");
+  printf("Bytewave");
 
   // Logo
   set_bkg_tiles(5, 5, logo_WIDTH / 8, logo_HEIGHT / 8, logo_map);
 
   gotoxy(5, 13);
-  printf("by  VEC2PT");
+  printf("by  vec2pt");
 
   vsync();
   delay(2200);
 }
 
+void create_selected_char(uint8_t source_index, uint8_t target_index) {
+  uint8_t tile_char[16];
+  get_bkg_data(source_index, 1, tile_char);
+  for (uint8_t i = 0; i < 16; i++) {
+    if ((i % 2) == 0)
+      tile_char[i] = 0xFF;
+  }
+  set_bkg_2bpp_data(target_index, 1, tile_char);
+}
+
 void setup(void) {
-  DISPLAY_ON;
-  SHOW_BKG;
-  HIDE_WIN;
-  HIDE_SPRITES;
-  setup_font();
-  set_bkg_data(tiles_TILE_COUNT + 1, logo_TILE_COUNT, logo_tiles);
+  font_init();
+  font_load(font_ibm);
+
+  create_selected_char(38, 96); // 'F'
+  create_selected_char(54, 97); // 'V'
+  create_selected_char(51, 98); // 'S'
+
+  set_bkg_data(TILE_COUNT + 1, logo_TILE_COUNT, logo_tiles);
   show_logo();
 }
 

@@ -35,9 +35,6 @@ $(GB_FILE): $(ASSETS_O) $(SOURCES_O)
 	$(LCC) $(LCC_FLAGS) -o $(GB_FILE) $(SOURCES_O) $(ASSETS_O)
 
 # Build .c files for assets
-$(SRC_DIR)/$(ASSETS_DIR)/tiles.c: $(ASSETS_DIR)/tiles.png
-	$(PNG2ASSET) $< $(PNG2ASSET_FLAGS) -tiles_only -keep_palette_order -c $@
-
 $(SRC_DIR)/$(ASSETS_DIR)/logo.c: $(ASSETS_DIR)/logo.png
 	$(PNG2ASSET) $< $(PNG2ASSET_FLAGS) -map -tile_origin 99 -keep_palette_order -c $@
 
