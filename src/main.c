@@ -19,6 +19,7 @@
 // -----------------------------------------------------------------------------
 
 #define VERSION "v0.8.3"
+#define DISPLAY_LOGO true
 
 #define TILE_COUNT 98
 
@@ -482,8 +483,10 @@ void setup(void) {
   create_selected_char(54, 97); // 'V'
   create_selected_char(51, 98); // 'S'
 
+#if DISPLAY_LOGO
   set_bkg_data(TILE_COUNT + 1, logo_TILE_COUNT, logo_tiles);
   show_logo();
+#endif
 }
 
 void play_bytebeat(void) {
