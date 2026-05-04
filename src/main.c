@@ -18,7 +18,7 @@
 // Variables / Constants
 // -----------------------------------------------------------------------------
 
-#define VERSION "v0.8.2"
+#define VERSION "v0.8.3"
 
 #define TILE_COUNT 98
 
@@ -178,8 +178,9 @@ void sound_restart(void) {
 // -----------------------------------------------------------------------------
 
 #define SCREENS_NR 3
+enum { S_FUNC, S_VIS, S_SETTINGS };
 // During initialization, “previous_screen” should be different than “screen”.
-uint8_t screen = 0, previous_screen = 3;
+uint8_t screen = S_FUNC, previous_screen = S_SETTINGS;
 
 // -----------------------------------------------------------------------------
 // Screen "FUNC"
@@ -221,7 +222,7 @@ void s_func_inputs(void) {
 }
 
 // -----------------------------------------------------------------------------
-// Screen "Visualization"
+// Screen "VIS" (Visualization)
 // -----------------------------------------------------------------------------
 
 uint8_t _waveram[32];
@@ -381,13 +382,13 @@ void draw(void) {
   if (screen != previous_screen) {
     remove_lcd_handlers();
     switch (screen) {
-    case 0:
+    case S_FUNC:
       s_func_draw();
       break;
-    case 1:
+    case S_VIS:
       s_visualization_draw();
       break;
-    case 2:
+    case S_SETTINGS:
       s_settings_draw();
       break;
     }
@@ -397,13 +398,13 @@ void draw(void) {
 
 void update(void) {
   switch (screen) {
-  case 0:
+  case S_FUNC:
     s_func_update();
     break;
-  case 1:
+  case S_VIS:
     s_visualization_update();
     break;
-  case 2:
+  case S_SETTINGS:
     s_settings_update();
     break;
   }
@@ -440,10 +441,10 @@ void check_inputs(void) {
   }
 
   switch (screen) {
-  case 0:
+  case S_FUNC:
     s_func_inputs();
     break;
-  case 2:
+  case S_SETTINGS:
     s_settings_inputs();
     break;
   }
