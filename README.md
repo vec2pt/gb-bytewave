@@ -45,7 +45,7 @@ Bytebeat formulas used in the code taken from [`bytebeat_formulas.txt`](http://v
 ![gb-bytewave-10.png](doc/gb-bytewave-10.png)
 
 
-## Special Thanks
+## Acknowledgments
 
 - [GBDK-2020](https://github.com/gbdk-2020/gbdk-2020)
 - [Pan Docs](https://gbdev.io/pandocs/)
